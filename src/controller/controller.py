@@ -40,7 +40,6 @@ class Controller:
             objects.Bonus(self.__screen, 763, 507),
             ]
 
-
     def blocks(self) -> None:
         """Drawing blocks"""
         for block in self.__blocks:
