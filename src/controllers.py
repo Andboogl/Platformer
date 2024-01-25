@@ -6,21 +6,35 @@ Game controllers
 
 import pygame
 import settings
+import objects
 
 
 class Controllers:
     """Controllers"""
-    def __init__(self, game, screen,
-                 players: list,
-                 blocks: list,
-                 enemies: list) -> None:
+    def __init__(self, game, screen) -> None:
         """Initializing class"""
         self.__game = game
         self.__screen = screen
-        self.__player = players[0]
-        self.__player2 = players[1]
-        self.__blocks = blocks
-        self.__enemies = enemies
+
+        self.__player = objects.Player(self.__screen, 100, 500, (155, 155, 200))
+        self.__player2 = objects.Player(self.__screen, 100, 500, (100, 255, 200))
+        self.__blocks = [
+            objects.Block(self.__screen, 41, 709),
+            objects.Block(self.__screen, 351, 584),
+            objects.Block(self.__screen, 688, 729),
+            objects.Block(self.__screen, 895, 584),
+            objects.Block(self.__screen, 665, 366),
+            objects.Block(self.__screen, 41, 356),
+            objects.Block(self.__screen, 394, 134),
+            objects.Block(self.__screen, 959, 227),
+        ]
+        self.__enemies = [
+            objects.Enemy(self.__screen, 751, 653),
+            objects.Enemy(self.__screen, 1006, 341),
+            objects.Enemy(self.__screen, 413, 226),
+            objects.Enemy(self.__screen, 53, 297),
+            objects.Enemy(self.__screen, 923, 49),
+        ]
 
     def blocks(self) -> None:
         """Drawing blocks"""
@@ -37,8 +51,11 @@ class Controllers:
                 self.__player2.image_rect.colliderect(enemy.image_rect):
                 self.__game.__init__()
 
-    def players_movement(self) -> None:
-        """Player movement"""
+    def players(self) -> None:
+        """Players movement and drawing"""
+        self.__player.draw()
+        self.__player2.draw()
+
         # Moving players
         keys = pygame.key.get_pressed()
 
