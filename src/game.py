@@ -48,8 +48,6 @@ class Game:
         """Game mainloop"""
         while True:
             self.__screen.fill(settings.BACKGROUND_COLOR)
-            self.__player.draw()
-            self.__player2.draw()
 
             self.__controllers.blocks()
             self.__controllers.enemies()
