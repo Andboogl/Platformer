@@ -7,6 +7,7 @@ Game
 import pygame
 import settings
 import objects
+from controllers import Controllers
 
 
 class Game:
@@ -19,7 +20,8 @@ class Game:
         pygame.display.set_icon(settings.WINDOW_ICON)
 
         # Game objects
-        self.__player = objects.Player(self.__screen, 100, 0)
+        self.__player = objects.Player(self.__screen, 100, 500, (155, 155, 200))
+        self.__player2 = objects.Player(self.__screen, 100, 500, (100, 255, 200))
         self.__blocks = [
             objects.Block(self.__screen, 41, 709),
             objects.Block(self.__screen, 351, 584),
@@ -30,52 +32,28 @@ class Game:
             objects.Block(self.__screen, 394, 134),
             objects.Block(self.__screen, 959, 227),
         ]
+        self.__enemies = [
+            objects.Enemy(self.__screen, 751, 653),
+            objects.Enemy(self.__screen, 1006, 341),
+            objects.Enemy(self.__screen, 413, 226),
+            objects.Enemy(self.__screen, 53, 297),
+            objects.Enemy(self.__screen, 923, 49),
+        ]
+        self.__controllers = Controllers(self, self.__screen,
+                                         [self.__player, self.__player2],
+                                         self.__blocks,
+                                         self.__enemies)
 
     def mainloop(self) -> None:
         """Game mainloop"""
         while True:
             self.__screen.fill(settings.BACKGROUND_COLOR)
             self.__player.draw()
+            self.__player2.draw()
 
-            # Drawing block
-            for block in self.__blocks:
-                block.draw()
-
-            # Moving player
-            keys = pygame.key.get_pressed()
-
-            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-                self.__player.move('left', self.__blocks)
-
-            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-                self.__player.move('right', self.__blocks)
-
-            # Jumping and moving down
-            if not self.__player.is_jumping:
-                self.__player.move('down', self.__blocks)
-
-                if keys[pygame.K_SPACE] or keys[pygame.K_UP]:
-                    self.__player.is_jumping = True
-
-            else:
-                if self.__player.jump_count >= -settings.JUMP_COUNT:
-                    if self.__player.jump_count > 0:
-                        self.__player.move(
-                            'top',
-                            self.__blocks,
-                            15)
-
-                    else:
-                        self.__player.move(
-                            'down', 
-                            self.__blocks,
-                            10)
-
-                    self.__player.jump_count -= 1
-
-                else:
-                    self.__player.is_jumping = False
-                    self.__player.jump_count = settings.JUMP_COUNT
+            self.__controllers.blocks()
+            self.__controllers.enemies()
+            self.__controllers.players_movement()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

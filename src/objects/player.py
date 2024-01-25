@@ -10,12 +10,12 @@ import settings
 
 class Player:
     """Player"""
-    def __init__(self, screen, x: int, y: int) -> None:
+    def __init__(self, screen, x: int, y: int, color: tuple) -> None:
         """Initializing class"""
         self.__screen = screen
         self.__x = x
         self.__y = y
-        self.__color = (155, 155, 200)
+        self.__color = color
         self.__size = (50, 50)
         self.__speed = 7
         self.__is_jumping = False
@@ -55,6 +55,11 @@ class Player:
         else:
             raise TypeError('Must be integer')
 
+    @property
+    def image_rect(self) -> pygame.rect.Rect:
+        """Get player image rect"""
+        return self.__image_rect
+
     def move(self, where: str, blocks_list: list, speed: int = None) -> None:
         """Move player"""
         speed = speed if speed else self.__speed
@@ -92,15 +97,22 @@ class Player:
         elif where == 'top':
             new_coordinate = self.__y - speed
 
-            if new_coordinate >= 0:
-                self.__y -= speed
+            for block in blocks_list:
+                if block.image_rect.colliderect(self.__image_rect):
+                    if new_coordinate < block.y:
+                        if not new_coordinate <= block.y - block.image_rect.height:
+                            break
+
+            else:
+                if new_coordinate >= 0:
+                    self.__y -= speed
 
         elif where == 'down':
             new_coordinate = self.__y + self.__image_rect.height + speed
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height + new_coordinate >= block.y:
+                    if new_coordinate >= block.y:
                         break
 
             else:
