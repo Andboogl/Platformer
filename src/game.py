@@ -6,7 +6,7 @@ Game
 
 import pygame
 import settings
-from controllers import Controllers
+from controller import Controller
 
 
 class Game:
@@ -18,7 +18,7 @@ class Game:
         pygame.display.set_caption(settings.WINDOW_CAPTION)
         pygame.display.set_icon(settings.WINDOW_ICON)
 
-        self.__controllers = Controllers(self, self.__screen)
+        self.__controllers = Controller(self, self.__screen)
 
     def mainloop(self) -> None:
         """Game mainloop"""
