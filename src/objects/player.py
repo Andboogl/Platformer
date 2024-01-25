@@ -104,7 +104,7 @@ class Player:
                             break
 
             else:
-                if new_coordinate >= 0:
+                if new_coordinate > 0:
                     self.__y -= speed
 
         elif where == 'down':
