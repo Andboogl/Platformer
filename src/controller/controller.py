@@ -4,8 +4,6 @@ Game controller
 """
 
 
-import pygame
-import settings
 import objects
 from .player import players
 
@@ -36,6 +34,12 @@ class Controller:
             objects.Enemy(self.__screen, 53, 297),
             objects.Enemy(self.__screen, 923, 49),
         ]
+        self.__bonus_list = [
+            objects.Bonus(self.__screen, 103, 109),
+            objects.Bonus(self.__screen, 538, 263),
+            objects.Bonus(self.__screen, 763, 507),
+            ]
+
 
     def blocks(self) -> None:
         """Drawing blocks"""
@@ -54,4 +58,5 @@ class Controller:
 
     def players(self) -> None:
         """Players controller"""
-        players(self.__player, self.__player2, self.__blocks)
+        result = players(self.__player, self.__player2, self.__blocks, self.__bonus_list)
+        self.__bonus_list = result[0]

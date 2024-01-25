@@ -10,6 +10,7 @@ import pygame
 class Enemy:
     """Enemy"""
     def __init__(self, screen, x: int, y: int) -> None:
+        """Initializing class"""
         self.__screen = screen
         self.__x = x
         self.__y = y

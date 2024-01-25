@@ -19,13 +19,42 @@ class Player:
         self.__size = (50, 50)
         self.__speed = 7
         self.__is_jumping = False
-        self.__jump_count = settings.JUMP_COUNT
+        self.__base_jump_count = settings.BASE_JUMP_COUNT
+        self.__jump_count = settings.BASE_JUMP_COUNT
 
         # Player image
         self.__image_rect = pygame.rect.Rect(
             self.__x, self.__y,
             self.__size[0],
             self.__size[1])
+
+    @property
+    def base_jump_count(self) -> int:
+        """Get base jump count"""
+        return self.__base_jump_count
+
+    @base_jump_count.setter
+    def base_jump_count(self, value: int) -> int:
+        """Get base jump count"""
+        if isinstance(value, int):
+            self.__base_jump_count = value
+
+        else:
+            raise TypeError(f'{value} must be integer')
+
+    @property
+    def speed(self) -> bool:
+        """Get player speed"""
+        return self.__speed
+
+    @speed.setter
+    def speed(self, value: int) -> None:
+        """Change speed value"""
+        if isinstance(value, int):
+            self.__speed = value
+
+        else:
+            raise TypeError('Must be integer')
 
     @property
     def is_jumping(self) -> bool:
@@ -99,9 +128,8 @@ class Player:
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if new_coordinate < block.y:
-                        if not new_coordinate <= block.y - block.image_rect.height:
-                            break
+                    if not new_coordinate <= block.y - block.image_rect.height / 2:
+                        break
 
             else:
                 if new_coordinate > 0:
@@ -131,5 +159,5 @@ class Player:
     def draw(self) -> None:
         """Draw rect on the screen"""
         pygame.draw.rect(self.__screen,
-                                        self.__color,
-                                        self.__image_rect)
+                         self.__color,
+                         self.__image_rect)

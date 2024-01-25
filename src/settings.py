@@ -14,4 +14,6 @@ WINDOW_ICON = pygame.image.load(
     os.path.join('images', 'icon.png'))
 BACKGROUND_COLOR = (200, 200, 155)
 FPS = 60
-JUMP_COUNT = 17
+BASE_JUMP_COUNT = 17
+GRAVITATION = 8
+PLAYER_ACCELERATION = 2
