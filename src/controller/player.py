@@ -4,6 +4,7 @@ Player controller
 """
 
 
+import random
 import pygame
 import settings
 
@@ -33,12 +34,25 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
         bonus.draw()
 
         if bonus.image_rect.colliderect(player1.image_rect):
-            player1.speed += settings.PLAYER_ACCELERATION
-            player1.base_jump_count += 1
+            bonus_action = random.choice([1, 2])
+
+            if bonus_action == 1:
+                player1.speed += settings.PLAYER_ACCELERATION
+
+            else:
+                player1.base_jump_count += 3
+
             bonus_list.remove(bonus)
 
         if bonus.image_rect.colliderect(player2.image_rect):
-            player2.speed += settings.PLAYER_ACCELERATION
+            bonus_action = random.choice([1, 2])
+
+            if bonus_action == 1:
+                player2.speed += settings.PLAYER_ACCELERATION
+
+            else:
+                player2.base_jump_count += 3
+
             bonus_list.remove(bonus)
 
     # Jumping and moving down for player 1
