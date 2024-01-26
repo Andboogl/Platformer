@@ -4,6 +4,8 @@ Game controller
 """
 
 
+import os
+import pygame
 import objects
 from .player import players
 
@@ -54,6 +56,8 @@ class Controller:
             if self.__player.image_rect.colliderect(enemy.image_rect) or\
                 self.__player2.image_rect.colliderect(enemy.image_rect):
                 self.__game.__init__()
+                pygame.mixer.Sound(os.path.join(
+                    'sounds', 'die.mp3')).play()
 
     def players(self) -> None:
         """Players controller"""

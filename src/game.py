@@ -13,6 +13,7 @@ class Game:
     """Game"""
     def __init__(self) -> None:
         """Initializing class"""
+        pygame.init()
         self.__screen = pygame.display.set_mode(settings.WINDOW_SIZE)
         self.__clock = pygame.time.Clock()
         pygame.display.set_caption(settings.WINDOW_CAPTION)
@@ -32,6 +33,10 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit(0)
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:
+                        self.__init__()
 
             self.__clock.tick(settings.FPS)
             pygame.display.update()

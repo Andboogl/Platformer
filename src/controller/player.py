@@ -4,6 +4,7 @@ Player controller
 """
 
 
+import os
 import random
 import pygame
 import settings
@@ -43,6 +44,8 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
                 player1.base_jump_count += 3
 
             bonus_list.remove(bonus)
+            pygame.mixer.Sound(os.path.join(
+                'sounds', 'bonus.mp3')).play()
 
         if bonus.image_rect.colliderect(player2.image_rect):
             bonus_action = random.choice([1, 2])
@@ -54,6 +57,8 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
                 player2.base_jump_count += 3
 
             bonus_list.remove(bonus)
+            pygame.mixer.Sound(os.path.join(
+                'sounds', 'bonus.mp3')).play()
 
     # Jumping and moving down for player 1
     if not player1.is_jumping:
@@ -61,6 +66,8 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
 
         if keys[pygame.K_SPACE]:
             player1.is_jumping = True
+            pygame.mixer.Sound(os.path.join(
+                'sounds', 'jump.mp3')).play()
 
     else:
         if player1.jump_count >= -player1.base_jump_count:
@@ -88,6 +95,8 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
 
         if keys[pygame.K_UP]:
             player2.is_jumping = True
+            pygame.mixer.Sound(os.path.join(
+                'sounds', 'jump.mp3')).play()
 
     else:
         if player2.jump_count >= -player2.base_jump_count:
