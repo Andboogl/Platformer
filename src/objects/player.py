@@ -89,6 +89,16 @@ class Player:
         """Get player image rect"""
         return self.__image_rect
 
+    @property
+    def x(self) -> int:
+        """Get player position on x"""
+        return self.__x
+
+    @property
+    def y(self) -> int:
+        """Get player position on y"""
+        return self.__y
+
     def move(self, where: str, blocks_list: list, speed: int = None) -> None:
         """Move player"""
         speed = speed if speed else self.__speed

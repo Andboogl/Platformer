@@ -7,7 +7,8 @@ Game controller
 import os
 import pygame
 import objects
-from .player import players
+from .players import players
+from .players_data import players_data
 
 
 class Controller:
@@ -63,3 +64,9 @@ class Controller:
         """Players controller"""
         result = players(self.__player, self.__player2, self.__blocks, self.__bonus_list)
         self.__bonus_list = result[0]
+
+    def players_data(self) -> None:
+        """Players data"""
+        players_data(self.__screen,
+                     self.__player,
+                     self.__player2)

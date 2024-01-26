@@ -10,7 +10,7 @@ import pygame
 import settings
 
 
-def players(player1, player2, blocks: list, bonus_list: list) -> None:
+def players(player1, player2, blocks: list, bonus_list: list) -> tuple:
     """Players movement and drawing"""
     player1.draw()
     player2.draw()
@@ -41,7 +41,7 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
                 player1.speed += settings.PLAYER_ACCELERATION
 
             else:
-                player1.base_jump_count += 3
+                player1.base_jump_count += settings.PLAYER_JUMP_ACCELERATION
 
             bonus_list.remove(bonus)
             pygame.mixer.Sound(os.path.join(
@@ -54,7 +54,7 @@ def players(player1, player2, blocks: list, bonus_list: list) -> None:
                 player2.speed += settings.PLAYER_ACCELERATION
 
             else:
-                player2.base_jump_count += 3
+                player2.base_jump_count += settings.PLAYER_JUMP_ACCELERATION
 
             bonus_list.remove(bonus)
             pygame.mixer.Sound(os.path.join(

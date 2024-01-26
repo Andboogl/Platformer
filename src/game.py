@@ -11,6 +11,8 @@ from controller import Controller
 
 class Game:
     """Game"""
+    __players_data_show = False
+
     def __init__(self) -> None:
         """Initializing class"""
         pygame.init()
@@ -30,6 +32,9 @@ class Game:
             self.__controllers.blocks()
             self.__controllers.enemies()
 
+            if self.__players_data_show:
+                self.__controllers.players_data()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit(0)
@@ -37,6 +42,9 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_r:
                         self.__init__()
+
+                    elif event.key == pygame.K_TAB:
+                        self.__players_data_show = False if self.__players_data_show else True
 
             self.__clock.tick(settings.FPS)
             pygame.display.update()
