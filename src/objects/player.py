@@ -17,7 +17,7 @@ class Player:
         self.__y = y
         self.__color = color
         self.__size = (50, 50)
-        self.__speed = 7
+        self.__speed = 9
         self.__is_jumping = False
         self.__base_jump_count = settings.BASE_JUMP_COUNT
         self.__jump_count = settings.BASE_JUMP_COUNT
@@ -98,9 +98,9 @@ class Player:
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height / 2\
+                    if self.__y + self.__image_rect.height / 2 - 5\
                         <= block.y + block.image_rect.height and\
-                        self.__y + self.__image_rect.height / 2 >= block.y:
+                        self.__y + self.__image_rect.height / 2 + 5 >= block.y:
                         if not self.__x - 6 < block.x:
                             break
 
@@ -113,9 +113,9 @@ class Player:
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height / 2\
+                    if self.__y + self.__image_rect.height / 2 - 5\
                         <= block.y + block.image_rect.height and\
-                        self.__y + self.__image_rect.height / 2 >= block.y:
+                        self.__y + self.__image_rect.height / 2 + 5 >= block.y:
                         if not self.__x + 6 > block.x + block.image_rect.width:
                             break
 
