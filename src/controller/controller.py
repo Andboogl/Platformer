@@ -21,7 +21,7 @@ class Controller:
         self.__player = objects.Player(self.__screen, 100, 500, (155, 155, 200))
         self.__player2 = objects.Player(self.__screen, 100, 500, (100, 255, 200))
         self.__blocks = [
-            objects.Block(self.__screen, 41, 709),
+            objects.Block(self.__screen, 70, 770),
             objects.Block(self.__screen, 351, 584),
             objects.Block(self.__screen, 688, 729),
             objects.Block(self.__screen, 895, 584),

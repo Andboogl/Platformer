@@ -108,54 +108,65 @@ class Player:
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height / 2 - 5\
-                        <= block.y + block.image_rect.height and\
-                        self.__y + self.__image_rect.height / 2 + 5 >= block.y:
-                        if not self.__x - 6 < block.x:
+                    if self.__y + self.__image_rect.height / 2 + 8 >= block.y and\
+                       self.__y + self.__image_rect.height / 2 - 8 <= block.y +\
+                        block.image_rect.height:
+                        if new_coordinate >= block.x:
                             break
 
             else:
                 if new_coordinate >= 0:
                     self.__x -= speed
 
+                else:
+                    self.__x = 0
+
         elif where == 'right':
             new_coordinate = self.__x + self.__image_rect.width + speed
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height / 2 - 5\
-                        <= block.y + block.image_rect.height and\
-                        self.__y + self.__image_rect.height / 2 + 5 >= block.y:
-                        if not self.__x + 6 > block.x + block.image_rect.width:
+                    if self.__y + self.__image_rect.height / 2 + 8 >= block.y and\
+                       self.__y + self.__image_rect.height / 2 - 8 <= block.y +\
+                        block.image_rect.height:
+                        if new_coordinate >= block.x:
                             break
 
             else:
                 if new_coordinate <= settings.WINDOW_SIZE[0]:
                     self.__x += speed
 
+                else:
+                    self.__x = settings.WINDOW_SIZE[0] - self.__image_rect.width
+
         elif where == 'top':
             new_coordinate = self.__y - speed
 
             for block in blocks_list:
                 if block.image_rect.colliderect(self.__image_rect):
-                    if not new_coordinate <= block.y - block.image_rect.height / 2:
+                    if not self.__y <= block.y:
                         break
 
             else:
                 if new_coordinate > 0:
                     self.__y -= speed
 
+                else:
+                    self.__y = 0
+
         elif where == 'down':
             new_coordinate = self.__y + self.__image_rect.height + speed
 
             for block in blocks_list:
-                if block.image_rect.colliderect(self.__image_rect):
-                    if new_coordinate >= block.y:
-                        break
+                if self.__image_rect.colliderect(block.image_rect):
+                    break
 
             else:
                 if new_coordinate <= settings.WINDOW_SIZE[1]:
                     self.__y += speed
+
+                else:
+                    self.__y = settings.WINDOW_SIZE[1] - self.__image_rect.height
 
         else:
             raise ValueError(f'{where} not recognized')

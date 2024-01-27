@@ -81,7 +81,7 @@ def players(player1, player2, blocks: list, bonus_list: list) -> tuple:
                 player1.move(
                     'down', 
                     blocks,
-                    10)
+                    settings.GRAVITATION)
 
             player1.jump_count -= 1
 
