@@ -6,6 +6,7 @@ Player
 
 import pygame
 import settings
+from .player_moving import move_player
 
 
 class Player:
@@ -99,83 +100,20 @@ class Player:
         """Get player position on y"""
         return self.__y
 
+    @property
+    def size(self) -> tuple:
+        """Get player size"""
+        return self.__size
+
     def move(self, where: str, blocks_list: list, speed: int = None) -> None:
         """Move player"""
-        speed = speed if speed else self.__speed
-
-        if where == 'left':
-            new_coordinate = self.__x - speed
-
-            for block in blocks_list:
-                if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height / 2 + 8 >= block.y and\
-                       self.__y + self.__image_rect.height / 2 - 8 <= block.y +\
-                        block.image_rect.height:
-                        if new_coordinate >= block.x:
-                            break
-
-            else:
-                if new_coordinate >= 0:
-                    self.__x -= speed
-
-                else:
-                    self.__x = 0
-
-        elif where == 'right':
-            new_coordinate = self.__x + self.__image_rect.width + speed
-
-            for block in blocks_list:
-                if block.image_rect.colliderect(self.__image_rect):
-                    if self.__y + self.__image_rect.height / 2 + 8 >= block.y and\
-                       self.__y + self.__image_rect.height / 2 - 8 <= block.y +\
-                        block.image_rect.height:
-                        if new_coordinate >= block.x:
-                            break
-
-            else:
-                if new_coordinate <= settings.WINDOW_SIZE[0]:
-                    self.__x += speed
-
-                else:
-                    self.__x = settings.WINDOW_SIZE[0] - self.__image_rect.width
-
-        elif where == 'top':
-            new_coordinate = self.__y - speed
-
-            for block in blocks_list:
-                if block.image_rect.colliderect(self.__image_rect):
-                    if not self.__y <= block.y:
-                        break
-
-            else:
-                if new_coordinate > 0:
-                    self.__y -= speed
-
-                else:
-                    self.__y = 0
-
-        elif where == 'down':
-            new_coordinate = self.__y + self.__image_rect.height + speed
-
-            for block in blocks_list:
-                if self.__image_rect.colliderect(block.image_rect):
-                    break
-
-            else:
-                if new_coordinate <= settings.WINDOW_SIZE[1]:
-                    self.__y += speed
-
-                else:
-                    self.__y = settings.WINDOW_SIZE[1] - self.__image_rect.height
-
-        else:
-            raise ValueError(f'{where} not recognized')
-
-        # Updating player image
-        self.__image_rect = pygame.rect.Rect(
-            self.__x, self.__y,
-            self.__size[0],
-            self.__size[1])
+        result = move_player(self,
+                             where,
+                             blocks_list,
+                             speed if speed else None)
+        self.__image_rect = result[0]
+        self.__x = result[1]
+        self.__y = result[2]
 
     def draw(self) -> None:
         """Draw rect on the screen"""
